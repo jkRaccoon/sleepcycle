@@ -45,8 +45,8 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Sleep Cycle Calculator — Best Bedtime & Wake-up Time"
-        description="Use 90-minute REM cycles to find the perfect bedtime or wake-up time. Includes 14-minute fall-asleep buffer for realistic timing."
+        titleKey="meta.home.title"
+        descriptionKey="meta.home.description"
         path="/"
         jsonLd={jsonLd}
       />

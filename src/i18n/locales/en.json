@@ -1,0 +1,38 @@
+{
+  "site": {
+    "brandPrefix": "Sleep Cycle",
+    "brandSuffix": "Calculator",
+    "footerCopyright": "© 2026 sleepcycle.bal.pe.kr · Results are for reference only, not medical advice. Consult a physician for sleep disorders."
+  },
+  "nav": {
+    "calculate": "Calculate",
+    "guide": "Guide",
+    "faq": "FAQ",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "contact": "Contact"
+  },
+  "lang": {
+    "toKorean": "한국어",
+    "toEnglish": "English"
+  },
+  "minimalEn": {
+    "title": "Korean-only content",
+    "body": "This page is currently available in Korean only. Use the button below to view the original Korean content.",
+    "linkLabel": "View in Korean →"
+  },
+  "meta": {
+    "home": {
+      "title": "Sleep Cycle Calculator — Best Bedtime & Wake-up Time",
+      "description": "Use 90-minute REM cycles to find the perfect bedtime or wake-up time. Includes 14-minute fall-asleep buffer for realistic timing."
+    },
+    "guide": {
+      "title": "Sleep Cycle Guide — 90-Minute Rule & Sleep Hygiene",
+      "description": "Understand 90-minute sleep cycles (light → deep → REM), why waking between cycles matters, and evidence-backed sleep hygiene tips."
+    },
+    "faq": {
+      "title": "Sleep Cycle FAQ — 90 Minutes, Naps, REM Apps, Debt",
+      "description": "Common questions about 90-minute cycles, fall-asleep buffer, power naps, alcohol, jet lag, and when to see a doctor."
+    }
+  }
+}

@@ -27,8 +27,8 @@ export default function Faq() {
   return (
     <>
       <SEO
-        title="Sleep Cycle FAQ — 90 Minutes, Naps, REM Apps, Debt"
-        description="Common questions about 90-minute cycles, fall-asleep buffer, power naps, alcohol, jet lag, and when to see a doctor."
+        titleKey="meta.faq.title"
+        descriptionKey="meta.faq.description"
         path="/faq"
         jsonLd={jsonLd}
       />

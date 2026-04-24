@@ -15,8 +15,8 @@ export default function Guide() {
   return (
     <>
       <SEO
-        title="Sleep Cycle Guide — 90-Minute Rule & Sleep Hygiene"
-        description="Understand 90-minute sleep cycles (light → deep → REM), why waking between cycles matters, and evidence-backed sleep hygiene tips."
+        titleKey="meta.guide.title"
+        descriptionKey="meta.guide.description"
         path="/guide"
         jsonLd={jsonLd}
       />

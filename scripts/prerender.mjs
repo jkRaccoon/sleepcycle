@@ -6,8 +6,16 @@ import handler from 'serve-handler';
 import puppeteer from 'puppeteer';
 
 const DIST = 'dist';
-const PORT = 4173;
-const ROUTES = ['/', '/guide', '/faq'];
+const PORT = Number(process.env.PRERENDER_PORT) || 4173;
+const BASE_ROUTES = ['/', '/guide', '/faq'];
+const LANGS = ['ko', 'en'];
+
+function langRoute(lang, base) {
+  if (lang === 'ko') return base;
+  return base === '/' ? '/en' : `/en${base}`;
+}
+
+const ROUTES = LANGS.flatMap((lang) => BASE_ROUTES.map((r) => langRoute(lang, r)));
 
 function startServer() {
   const server = createServer((req, res) => {
@@ -21,6 +29,22 @@ async function prerenderRoute(browser, route) {
   page.setDefaultNavigationTimeout(30000);
   await page.goto(`http://localhost:${PORT}${route}`, { waitUntil: 'networkidle0' });
   try { await page.waitForSelector('h1', { timeout: 5000 }); } catch { console.warn(`! ${route}: h1 not found`); }
+    await page.evaluate(() => {
+    const keepLast = (sel) => {
+      const n = document.querySelectorAll(sel);
+      for (let i = 0; i < n.length - 1; i++) n[i].remove();
+    };
+    keepLast('title');
+    keepLast('meta[name="description"]');
+    keepLast('link[rel="canonical"]');
+    keepLast('meta[property="og:url"]');
+    keepLast('meta[property="og:title"]');
+    keepLast('meta[property="og:description"]');
+    keepLast('meta[property="og:image"]');
+    keepLast('meta[name="twitter:title"]');
+    keepLast('meta[name="twitter:description"]');
+    keepLast('meta[name="twitter:image"]');
+  });
   const html = await page.content();
   await page.close();
   return html;

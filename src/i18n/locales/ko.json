@@ -1,0 +1,38 @@
+{
+  "site": {
+    "brandPrefix": "수면주기",
+    "brandSuffix": "역산 계산기",
+    "footerCopyright": "© 2026 sleepcycle.bal.pe.kr · 결과는 참고용이며 의료 조언이 아닙니다. 수면 장애가 있으면 전문의 상담을 권장합니다."
+  },
+  "nav": {
+    "calculate": "계산",
+    "guide": "가이드",
+    "faq": "FAQ",
+    "privacy": "개인정보처리방침",
+    "terms": "이용약관",
+    "contact": "문의"
+  },
+  "lang": {
+    "toKorean": "한국어",
+    "toEnglish": "English"
+  },
+  "minimalEn": {
+    "title": "",
+    "body": "",
+    "linkLabel": ""
+  },
+  "meta": {
+    "home": {
+      "title": "수면주기 역산 계산기 — 최적 취침·기상 시간",
+      "description": "90분 REM 수면주기를 이용해 최적의 취침 또는 기상 시간을 계산합니다. 잠드는 데 걸리는 14분 버퍼를 포함한 현실적인 시간 계산."
+    },
+    "guide": {
+      "title": "수면주기 가이드 — 90분 법칙 & 수면 위생",
+      "description": "90분 수면주기(얕은 잠→깊은 잠→REM), 주기 사이에 일어나는 것이 중요한 이유, 수면 위생 팁."
+    },
+    "faq": {
+      "title": "수면주기 FAQ — 90분, 낮잠, REM 앱, 수면 부채",
+      "description": "90분 주기, 잠드는 버퍼, 파워낮잠, 알코올, 시차 적응, 병원 방문 시기 등 자주 묻는 질문."
+    }
+  }
+}
