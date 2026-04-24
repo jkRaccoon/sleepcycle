@@ -34,13 +34,19 @@ async function prerenderRoute(browser, route) {
       const n = document.querySelectorAll(sel);
       for (let i = 0; i < n.length - 1; i++) n[i].remove();
     };
-    keepLast('title');
+    const keepFirst = (sel) => {
+      const n = document.querySelectorAll(sel);
+      for (let i = 1; i < n.length; i++) n[i].remove();
+    };
+    keepFirst('title');
     keepLast('meta[name="description"]');
     keepLast('link[rel="canonical"]');
     keepLast('meta[property="og:url"]');
     keepLast('meta[property="og:title"]');
     keepLast('meta[property="og:description"]');
     keepLast('meta[property="og:image"]');
+    keepLast('meta[property="og:locale"]');
+    keepLast('meta[property="og:site_name"]');
     keepLast('meta[name="twitter:title"]');
     keepLast('meta[name="twitter:description"]');
     keepLast('meta[name="twitter:image"]');
