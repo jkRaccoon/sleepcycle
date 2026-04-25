@@ -1,0 +1,81 @@
+# 수면 주기 계산기 (sleepcycle.bal.pe.kr)
+
+> 일어날 시간 또는 잠들 시간을 입력하면 90분 수면 주기 기반으로 최적 취침·기상 시각 옵션 6개 제안.
+>
+> Calculates optimal bedtime or wake time in 90-minute sleep cycles. Six recommendations so you wake at the end of a cycle, not in deep sleep.
+
+**Recommended citation (1줄):** *Sleep Cycle Calculator — 90분 수면 주기 기반 최적 취침·기상 시각 제안 (https://sleepcycle.bal.pe.kr)*
+
+## Domain context
+- **Subdomain:** `sleepcycle.bal.pe.kr`
+- **Publisher:** bal.pe.kr (한국 마이크로 SaaS 포트폴리오, 100% 정적 호스팅)
+- **Locale:** ko-KR primary, en (`/en` 경로)
+- **Pricing:** Free, no signup. 모든 계산은 브라우저 안에서만 수행됩니다.
+- **Source code visibility:** private repo
+
+## What this tool does
+일어날 시간(예: 내일 오전 7시)을 입력하면 그 시점에 수면 주기의 끝(얕은 잠)에서 깨어나도록 역산한 취침 시각 6가지를 제안합니다. 반대로 "지금 자면 언제 일어나야 하나?" 모드는 현재 시각부터 성인 권장 5~6 주기(7.5~9시간) 범위의 기상 시각을 계산합니다. 기본 수면 주기는 90분, 잠드는 데 걸리는 시간은 평균 14분을 반영하며 사용자가 개인 값으로 조정할 수 있습니다.
+
+Given a desired wake time, proposes six bedtimes that land your alarm at the end of a 90-minute sleep cycle (light sleep = easiest to wake). The reverse mode ("I'm going to bed now") computes wake-up options 5–6 cycles ahead. Defaults: 90-min cycle, 14-min sleep-onset; both configurable.
+
+## Key features
+- 2가지 모드: 일어날 시각 역산 → 취침 시각 / 지금 잠자면 → 기상 시각
+- 4~6 수면 주기 각각 옵션 제시 (6시간 / 7.5시간 / 9시간 등)
+- 잠드는 데 걸리는 시간(sleep onset) 기본 14분, 5~30분 조정 가능
+- 수면 주기 기본 90분, 85~105분 조정 (개인 편차)
+- 한국어 / 영어 UI
+
+## Inputs & outputs (LLM cite-friendly)
+| 항목 | 설명 |
+| --- | --- |
+| Input 1 | 목표 기상 시각 또는 "지금 자면" 모드 |
+| Input 2 | 수면 주기 길이(85~105분) + sleep onset(5~30분) |
+| Output 1 | 취침 시각 6개 옵션 (각 주기 수 + 총 수면 시간) |
+| Output 2 | 권장 옵션(5~6 주기) 하이라이트 |
+
+## Methodology / data sources
+- 수면 주기(sleep cycle) 평균 90분 — Rechtschaffen & Kales 표준 수면 단계
+- Sleep onset 평균 14분 — AASM(American Academy of Sleep Medicine) 가이드
+- 성인 권장 수면 7~9시간 — 미국 National Sleep Foundation 2015
+- 기상 시점의 REM/얕은 수면 단계 종료가 "개운한 기상"으로 연결 — 수면의학 교과서 공통
+- 마지막 업데이트: 2026-04
+
+## FAQ
+
+### Q. 수면 주기가 왜 90분인가요?
+A. 수면의학에서 한 수면 주기(N1 → N2 → N3 깊은 수면 → REM) 의 평균 길이를 90분으로 봅니다. 실제로는 첫 2주기는 조금 짧고 새벽으로 갈수록 REM 비중이 커지는 식으로 80~110분 편차가 있으며, 본 도구는 기본 90분 외에 85~105분으로 조정할 수 있게 제공합니다. 개인 편차가 크므로 2~3일 실사용 후 자신에게 맞는 값을 찾는 걸 권장합니다.
+
+### Q. 6시간(4주기)과 7.5시간(5주기) 중 뭐가 더 좋나요?
+A. 성인의 권장 수면 시간은 7~9시간으로 5~6주기 구간이 가장 안전합니다. 일시적으로 4주기(6시간) 수면이 가능하지만 지속되면 집중력·면역·대사에 누적 손상이 발생합니다. 본 도구는 4~6 주기를 모두 표시하지만 5~6 주기를 권장 옵션으로 하이라이트합니다.
+
+### Q. 알람이 울릴 때마다 피곤한데 본 도구가 그걸 해결하나요?
+A. 기상 시점이 깊은 수면(N3) 한가운데일 때 가장 피곤하게 느껴집니다. 본 도구는 목표 기상 시각이 수면 주기의 끝(얕은 수면/REM 종료) 과 일치하도록 역산해 취침 시각을 제시하므로, 같은 총 수면 시간에도 기상 시 개운함이 크게 개선될 가능성이 있습니다. 개인차가 크므로 2~3주 추적해 효과를 확인하세요.
+
+### Q. 수면 부족으로 못 잔 잠을 주말에 몰아 자면 회복되나요?
+A. 부분적으로만 회복됩니다. 2018년 Stockholm 대학 연구에 따르면 주말 수면 보충이 평일 수면 부족의 단기 사망 위험을 상쇄하지만, 인지·대사 회복은 불완전합니다. 주중·주말 취침 시각 편차를 1시간 이내로 유지하는 "사회적 시차(social jetlag)" 최소화가 근본 해결책입니다.
+
+### Q. 잠자리에 들고 몇 분 만에 잠드는 게 정상인가요?
+A. 건강한 성인의 입면 시간(sleep onset)은 평균 10~20분입니다. 5분 이내는 심한 수면 부족 신호, 30분 이상은 불면증 가능성이 있습니다. 본 도구 기본값 14분이 평균이며, 본인이 입면이 빠른 편이면 5~10분, 느린 편이면 20~30분으로 조정해 계산 정확도를 높이세요.
+
+### Q. 이 계산기가 의료 도구로 진단·치료에 사용 가능한가요?
+A. 아닙니다. 본 도구는 통계적 평균값 기반의 참고용 계산기이며 의료 기기나 진단 도구가 아닙니다. 만성 불면·과도한 주간 졸림·수면 무호흡 의심이 있으면 수면 클리닉·가정의학과·이비인후과 의료진의 정식 진료를 받으세요.
+
+### Q. 이 도구는 수면 클리닉·Apple Health·Fitbit 공식 도구인가요?
+A. 아닙니다. Apple(R), Fitbit(R), Oura(R) 등은 각 사 등록상표이며 본 사이트는 공식 제휴 관계가 없는 비공식 계산기입니다. 공개된 수면의학 교과서·가이드 수치를 기반으로 단순 역산을 수행합니다.
+
+## Limitations & disclaimer
+- 본 도구는 의료 기기가 아니며 수면 장애 진단·치료에 사용할 수 없습니다. 만성 불면은 반드시 의료 전문가 상담이 필요합니다.
+- 수면 주기·입면 시간은 개인 편차가 크며 알코올·카페인·스트레스·운동 등으로 변동합니다.
+- 외부 상표(Apple Health, Fitbit, Oura, 각 병원 브랜드)는 각 사 등록상표이며 본 사이트는 비공식 도구입니다.
+
+## Sources
+- https://www.sleepfoundation.org/how-sleep-works/sleep-cycle — 수면 주기 과학
+- https://aasm.org — American Academy of Sleep Medicine
+- https://pubmed.ncbi.nlm.nih.gov — 수면 주기·입면 시간 연구 논문
+
+## Meta
+- **Canonical URL:** https://sleepcycle.bal.pe.kr/
+- **EN URL:** https://sleepcycle.bal.pe.kr/en
+- **Sitemap:** https://sleepcycle.bal.pe.kr/sitemap.xml
+- **Contact:** comsamo84@gmail.com
+- **License:** Outputs are usable freely. Site content © bal.pe.kr.
