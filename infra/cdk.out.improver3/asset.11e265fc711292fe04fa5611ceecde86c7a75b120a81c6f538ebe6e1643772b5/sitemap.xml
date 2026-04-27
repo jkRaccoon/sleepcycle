@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://sleepcycle.bal.pe.kr/</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sleepcycle.bal.pe.kr/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sleepcycle.bal.pe.kr/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sleepcycle.bal.pe.kr/" />
+  </url>
+  <url>
+    <loc>https://sleepcycle.bal.pe.kr/en</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sleepcycle.bal.pe.kr/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sleepcycle.bal.pe.kr/en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sleepcycle.bal.pe.kr/" />
+  </url>
+  <url>
+    <loc>https://sleepcycle.bal.pe.kr/guide</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sleepcycle.bal.pe.kr/guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sleepcycle.bal.pe.kr/en/guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sleepcycle.bal.pe.kr/guide" />
+  </url>
+  <url>
+    <loc>https://sleepcycle.bal.pe.kr/en/guide</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sleepcycle.bal.pe.kr/guide" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sleepcycle.bal.pe.kr/en/guide" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sleepcycle.bal.pe.kr/guide" />
+  </url>
+  <url>
+    <loc>https://sleepcycle.bal.pe.kr/faq</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sleepcycle.bal.pe.kr/faq" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sleepcycle.bal.pe.kr/en/faq" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sleepcycle.bal.pe.kr/faq" />
+  </url>
+  <url>
+    <loc>https://sleepcycle.bal.pe.kr/en/faq</loc>
+    <lastmod>2026-04-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sleepcycle.bal.pe.kr/faq" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://sleepcycle.bal.pe.kr/en/faq" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sleepcycle.bal.pe.kr/faq" />
+  </url>
+</urlset>

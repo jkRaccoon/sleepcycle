@@ -1,0 +1,36 @@
+{
+  "version": "53.0.0",
+  "files": {
+    "d2191f6f199b95d1c044799f514b1ceca87200b3014c43c34839aad03dc69b8c": {
+      "displayName": "SleepcycleCert/Custom::CrossRegionExportWriterCustomResourceProvider Code",
+      "source": {
+        "path": "asset.d2191f6f199b95d1c044799f514b1ceca87200b3014c43c34839aad03dc69b8c",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "778021795831-us-east-1-b02eb7a3": {
+          "bucketName": "cdk-hnb659fds-assets-778021795831-us-east-1",
+          "objectKey": "d2191f6f199b95d1c044799f514b1ceca87200b3014c43c34839aad03dc69b8c.zip",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::778021795831:role/cdk-hnb659fds-file-publishing-role-778021795831-us-east-1"
+        }
+      }
+    },
+    "33de5adb97265b626e2bf6bfaaf103acc07accb7883d139ab92a6846d9f0435b": {
+      "displayName": "SleepcycleCert Template",
+      "source": {
+        "path": "SleepcycleCert.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "778021795831-us-east-1-895f022f": {
+          "bucketName": "cdk-hnb659fds-assets-778021795831-us-east-1",
+          "objectKey": "33de5adb97265b626e2bf6bfaaf103acc07accb7883d139ab92a6846d9f0435b.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::778021795831:role/cdk-hnb659fds-file-publishing-role-778021795831-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
