@@ -126,17 +126,47 @@ export default function Home() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Restore state from URL params
+  // Restore state — URL params win, localStorage fallback, defaults last.
+  const STORAGE_KEY = 'sleepcycle:last';
+  const stored = (() => {
+    if (typeof window === 'undefined') return null;
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY);
+      return raw ? (JSON.parse(raw) as { mode?: Mode; time?: string; fall?: number }) : null;
+    } catch {
+      return null;
+    }
+  })();
   const searchParams = new URLSearchParams(location.search);
-  const initMode = (searchParams.get('mode') as Mode) ?? 'sleep-now';
-  const initTime = searchParams.get('time') ?? '07:00';
-  const initFall = Number(searchParams.get('fall') ?? FALL_ASLEEP_DEFAULT);
+  const initMode = (searchParams.get('mode') as Mode) ?? stored?.mode ?? 'sleep-now';
+  const initTime = searchParams.get('time') ?? stored?.time ?? '07:00';
+  const fallParam = searchParams.get('fall');
+  const initFall = Number(
+    fallParam !== null
+      ? fallParam
+      : typeof stored?.fall === 'number'
+        ? stored.fall
+        : FALL_ASLEEP_DEFAULT,
+  );
 
   const [mode, setMode] = useState<Mode>(initMode);
   const [customTime, setCustomTime] = useState<string>(initTime);
   const [fallAsleepMin, setFallAsleepMin] = useState<number>(
     Number.isFinite(initFall) && initFall >= 5 && initFall <= 30 ? initFall : FALL_ASLEEP_DEFAULT,
   );
+
+  // Persist current state to localStorage whenever it changes.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      window.localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({ mode, time: customTime, fall: fallAsleepMin }),
+      );
+    } catch {
+      /* ignore */
+    }
+  }, [mode, customTime, fallAsleepMin]);
   const [shareMsg, setShareMsg] = useState('');
   const shareMsgTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -180,7 +210,10 @@ export default function Home() {
     return null;
   }, [mode, customTime, options]);
 
-  useMemo(() => track('sleep_calc', { mode }), [mode]);
+  // GA4 — useEffect (was useMemo: side-effect anti-pattern).
+  useEffect(() => {
+    track('sleep_calc', { mode });
+  }, [mode]);
 
   const isKo = !location.pathname.startsWith('/en');
 
