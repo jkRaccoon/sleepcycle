@@ -27,6 +27,17 @@ function startServer() {
 async function prerenderRoute(browser, route) {
   const page = await browser.newPage();
   page.setDefaultNavigationTimeout(30000);
+  // AdSense/광고·analytics 요청 차단 — prerender 시 동적 주입을 dist HTML에 굳히지 않음
+  // show_ads_impl.js?bust=... 등 stale URL 404 + 페이지 로딩 지연 방지
+  await page.setRequestInterception(true);
+  page.on('request', (req) => {
+    const u = req.url();
+    if (u.includes('googlesyndication.com') || u.includes('googleads.g.doubleclick.net') || u.includes('google-analytics.com') || u.includes('googletagmanager.com') || u.includes('doubleclick.net') || u.includes('ads-partners.coupang.com') || u.includes('coupang.com/g.js')) {
+      req.abort();
+    } else {
+      req.continue();
+    }
+  });
   await page.goto(`http://localhost:${PORT}${route}`, { waitUntil: 'networkidle0' });
   try { await page.waitForSelector('h1', { timeout: 5000 }); } catch { console.warn(`! ${route}: h1 not found`); }
     await page.evaluate(() => {
@@ -83,6 +94,18 @@ async function prerenderRoute(browser, route) {
   keepLast('meta[name="robots"]');
   keepLast('meta[property="og:image:alt"]');
   keepLast('meta[name="twitter:image:alt"]');
+      // AdSense prerender 잔재 정리 — 차단 누락 시에도 안전
+    document.querySelectorAll('script[src*="show_ads_impl"], script[src*="googlesyndication.com/pagead/managed"]').forEach((n) => n.remove());
+    document.querySelectorAll('ins.adsbygoogle[data-adsbygoogle-status]').forEach((n) => {
+      n.removeAttribute('data-adsbygoogle-status');
+      n.removeAttribute('data-ad-status');
+      n.removeAttribute('data-ad-hi');
+      n.removeAttribute('style');
+      n.innerHTML = '';
+    });
+    document.querySelectorAll('iframe[id^="aswift_"], iframe#google_esf, iframe[src*="recaptcha/api2/aframe"]').forEach((n) => n.remove());
+    document.querySelectorAll('script[src*="ads-partners.coupang.com"], script[src*="coupang.com/g.js"]').forEach((n) => n.remove());
+    document.querySelectorAll('aside[aria-label="advertisement"] iframe, iframe[src*="coupang.com"]').forEach((n) => n.remove());
   });
   const html = await page.content();
   await page.close();
