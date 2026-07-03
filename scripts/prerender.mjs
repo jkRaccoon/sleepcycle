@@ -1,12 +1,13 @@
 #!/usr/bin/env node
-import { createServer } from 'http';
 import { writeFileSync, mkdirSync } from 'fs';
 import { dirname, join } from 'path';
-import handler from 'serve-handler';
+import { preview } from 'vite';
 import puppeteer from 'puppeteer';
 
 const DIST = 'dist';
-const PORT = Number(process.env.PRERENDER_PORT) || 4173;
+const PORT = 4173 + Math.floor((process.pid % 1000)); // 병렬 빌드 포트 충돌 회피
+const SUBDIR = process.env.BUILD_TARGET === 'subdir';
+const BASE = SUBDIR ? '/tools/sleepcycle/' : '/';
 const BASE_ROUTES = ['/', '/guide', '/faq'];
 const LANGS = ['ko', 'en'];
 
@@ -17,11 +18,8 @@ function langRoute(lang, base) {
 
 const ROUTES = LANGS.flatMap((lang) => BASE_ROUTES.map((r) => langRoute(lang, r)));
 
-function startServer() {
-  const server = createServer((req, res) => {
-    handler(req, res, { public: DIST, rewrites: [{ source: '**', destination: '/index.html' }] });
-  });
-  return new Promise((resolve) => server.listen(PORT, () => resolve(server)));
+async function startServer() {
+  return preview({ preview: { port: PORT }, base: BASE });
 }
 
 async function prerenderRoute(browser, route) {
@@ -38,7 +36,8 @@ async function prerenderRoute(browser, route) {
       req.continue();
     }
   });
-  await page.goto(`http://localhost:${PORT}${route}`, { waitUntil: 'networkidle0' });
+  const routePath = route === '/' ? BASE : `${BASE}${route.slice(1)}`;
+  await page.goto(`http://localhost:${PORT}${routePath}`, { waitUntil: 'networkidle0' });
   try { await page.waitForSelector('h1', { timeout: 5000 }); } catch { console.warn(`! ${route}: h1 not found`); }
     await page.evaluate(() => {
     const keepLast = (sel) => {
@@ -126,7 +125,7 @@ async function main() {
     }
   } finally {
     await browser.close();
-    server.close();
+    server.httpServer.close();
   }
   console.log('✓ prerender done');
 }

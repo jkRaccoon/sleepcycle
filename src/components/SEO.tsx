@@ -10,7 +10,9 @@ interface SEOProps {
   noindex?: boolean;
 }
 
-const SITE = 'https://sleepcycle.bal.pe.kr';
+const SITE = 'https://bal.pe.kr';
+const BASE_PATH = '/tools/sleepcycle';
+const withBase = (p: string) => (p === '/' ? `${BASE_PATH}/` : `${BASE_PATH}${p}`);
 const PUBLISHER_NAME = 'bal.pe.kr';
 const PUBLISHER_URL = 'https://bal.pe.kr';
 
@@ -22,8 +24,8 @@ export default function SEO({ titleKey, descriptionKey, path, jsonLd, noindex }:
   const title = t(titleKey);
   const description = t(descriptionKey);
 
-  const koPath = path;
-  const enPath = withLangPrefix(path, 'en');
+  const koPath = withBase(path);
+  const enPath = withBase(withLangPrefix(path, 'en'));
   const currentPath = lang === 'ko' ? koPath : enPath;
   const url = `${SITE}${currentPath}`;
 
@@ -32,7 +34,7 @@ export default function SEO({ titleKey, descriptionKey, path, jsonLd, noindex }:
   const ogLocale = lang === 'ko' ? 'ko_KR' : 'en_US';
   const ogImageAlt = fullTitle;
 
-  const homeUrl = `${SITE}${lang === 'ko' ? '/' : '/en'}`;
+  const homeUrl = `${SITE}${withBase(lang === 'ko' ? '/' : '/en')}`;
   const breadcrumbItems: Array<{ '@type': 'ListItem'; position: number; name: string; item: string }> = [
     { '@type': 'ListItem', position: 1, name: brandSuffix, item: homeUrl },
   ];
@@ -75,7 +77,7 @@ export default function SEO({ titleKey, descriptionKey, path, jsonLd, noindex }:
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
       <meta property="og:locale" content={ogLocale} />
-      <meta property="og:image" content={`${SITE}/og.png`} />
+      <meta property="og:image" content={`${SITE}${BASE_PATH}/og.png`} />
       <meta property="og:image:alt" content={ogImageAlt} />
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
@@ -83,7 +85,7 @@ export default function SEO({ titleKey, descriptionKey, path, jsonLd, noindex }:
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={`${SITE}/og.png`} />
+      <meta name="twitter:image" content={`${SITE}${BASE_PATH}/og.png`} />
       <meta name="twitter:image:alt" content={ogImageAlt} />
       <script
         type="application/ld+json"
