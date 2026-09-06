@@ -50,4 +50,4 @@ Allow: /
 User-agent: FacebookBot
 Allow: /
 
-Sitemap: https://sleepcycle.bal.pe.kr/sitemap.xml
+Sitemap: https://bal.pe.kr/tools/sleepcycle/sitemap.xml

@@ -1,0 +1,52 @@
+{
+  "hub": {
+    "id": "life",
+    "emoji": "🍚",
+    "ko": "생활·건강",
+    "en": "Life & Health"
+  },
+  "tools": [
+    {
+      "slug": "hangulart",
+      "url": "https://bal.pe.kr/tools/hangulart",
+      "emoji": "✨",
+      "ko": "한글 특수문자 꾸미기",
+      "en": "Korean Unicode Style Generator"
+    },
+    {
+      "slug": "jodiac",
+      "url": "https://bal.pe.kr/tools/jodiac",
+      "emoji": "🐉",
+      "ko": "띠·별자리·음력 변환",
+      "en": "Korean Zodiac & Lunar Converter"
+    },
+    {
+      "slug": "lsas",
+      "url": "https://bal.pe.kr/tools/lsas",
+      "emoji": "😰",
+      "ko": "사회불안 LSAS 자가체크",
+      "en": "Social Anxiety LSAS Self-Check"
+    },
+    {
+      "slug": "passvisa",
+      "url": "https://bal.pe.kr/tools/passvisa",
+      "emoji": "✈️",
+      "ko": "한국여권 비자요건 체커",
+      "en": "Korean Passport Visa Requirements Checker"
+    },
+    {
+      "slug": "pcl5",
+      "url": "https://bal.pe.kr/tools/pcl5",
+      "emoji": "💙",
+      "ko": "PCL-5 PTSD 자가체크",
+      "en": "PCL-5 PTSD Self-Check"
+    },
+    {
+      "slug": "bdaycafe",
+      "url": "https://bal.pe.kr/tools/bdaycafe",
+      "emoji": "🎂",
+      "ko": "생일카페 지도 D-day",
+      "en": "K-pop Birthday Cafe Map & D-day"
+    }
+  ]
+}

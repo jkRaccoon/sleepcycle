@@ -13,9 +13,10 @@ const DISCLOSURE_EN =
 
 interface Props {
   className?: string;
+  position?: 'top' | 'bottom';
 }
 
-export default function CoupangBanner({ className = '' }: Props) {
+export default function CoupangBanner({ className = '', position = 'bottom' }: Props) {
   const { i18n, t } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -23,26 +24,55 @@ export default function CoupangBanner({ className = '' }: Props) {
     const container = ref.current;
     if (!container || typeof window === 'undefined') return;
 
-    container.innerHTML = '';
+    let lastWidth = 0;
+
+    // 쿠팡 위젯은 생성 시점의 width 로 고정되므로 컨테이너 실측 폭을 넘긴다.
+    // 680 고정이면 모바일(<=430px)에서 가로 스크롤이 생겨 레이아웃이 깨진다.
+    const measure = () => {
+      const available =
+        container.clientWidth ||
+        container.parentElement?.clientWidth ||
+        window.innerWidth - 32;
+      return Math.max(240, Math.min(Math.floor(available), 680));
+    };
 
     const appendInit = () => {
+      lastWidth = measure();
       const init = document.createElement('script');
       init.text =
-        'new PartnersCoupang.G({"id":993604,"trackingCode":"AF7990222","subId":null,"template":"carousel","width":"680","height":"140"});';
+        'new PartnersCoupang.G({"id":993604,"trackingCode":"AF7990222","subId":"sleepcycle","template":"carousel","width":"' +
+        lastWidth +
+        '","height":"140"});';
       container.appendChild(init);
     };
 
-    if ((window as unknown as { PartnersCoupang?: unknown }).PartnersCoupang) {
-      appendInit();
-    } else {
-      const g = document.createElement('script');
-      g.src = 'https://ads-partners.coupang.com/g.js';
-      g.async = true;
-      g.onload = appendInit;
-      container.appendChild(g);
-    }
+    const render = () => {
+      container.innerHTML = '';
+      if ((window as unknown as { PartnersCoupang?: unknown }).PartnersCoupang) {
+        appendInit();
+      } else {
+        const g = document.createElement('script');
+        g.src = 'https://ads-partners.coupang.com/g.js';
+        g.async = true;
+        g.onload = appendInit;
+        container.appendChild(g);
+      }
+    };
+
+    render();
+
+    let resizeTimer: ReturnType<typeof setTimeout> | undefined;
+    const onResize = () => {
+      if (resizeTimer) clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (measure() !== lastWidth) render();
+      }, 300);
+    };
+    window.addEventListener('resize', onResize);
 
     return () => {
+      window.removeEventListener('resize', onResize);
+      if (resizeTimer) clearTimeout(resizeTimer);
       container.innerHTML = '';
     };
   }, []);
@@ -51,14 +81,19 @@ export default function CoupangBanner({ className = '' }: Props) {
     defaultValue: i18n.language?.startsWith('en') ? DISCLOSURE_EN : DISCLOSURE_KO,
   });
 
+  const spacing =
+    position === 'top'
+      ? 'mb-8 border-b border-slate-200 pb-6'
+      : 'mt-8 border-t border-slate-200 pt-6';
+
   return (
     <aside
-      className={`mt-8 border-t border-slate-200 pt-6 ${className}`}
+      className={`${spacing} ${className}`}
       aria-label="advertisement"
     >
       <div
         ref={ref}
-        className="mx-auto flex w-full justify-center overflow-x-auto"
+        className="mx-auto flex w-full max-w-full justify-center overflow-hidden"
         style={{ maxWidth: '100%' }}
       />
       <p className="mt-2 text-center text-[11px] leading-tight text-slate-400">{disclosure}</p>
