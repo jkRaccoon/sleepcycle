@@ -1,10 +1,14 @@
 import { useEffect, useRef } from 'react';
+import widget from '../data/coupang-widget.json';
 import { useTranslation } from 'react-i18next';
 
-// 쿠팡 파트너스 캐러셀 배너 (id 993604 / AF7990222)
+// 쿠팡 파트너스 캐러셀 배너 (위젯 id 는 허브별, trackingCode AF7990222)
 // React SPA 에서 g.js 가 document.currentScript 부모에 위젯을 삽입하므로,
 // 스크립트를 컨테이너 div 안에 직접 주입해 위치를 보장한다.
 // prerender(puppeteer)는 ads-partners.coupang.com 요청을 차단하므로 dist HTML 에 굳지 않는다.
+
+// 허브별 카테고리 베스트 배너. 맞는 카테고리가 없는 허브는 기본 위젯(993604).
+const WIDGET_ID = (widget as { id: number }).id;
 
 const DISCLOSURE_KO =
   '이 사이트는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.';
@@ -40,7 +44,7 @@ export default function CoupangBanner({ className = '', position = 'bottom' }: P
       lastWidth = measure();
       const init = document.createElement('script');
       init.text =
-        'new PartnersCoupang.G({"id":993604,"trackingCode":"AF7990222","subId":"sleepcycle","template":"carousel","width":"' +
+        'new PartnersCoupang.G({"id":' + WIDGET_ID + ',"trackingCode":"AF7990222","subId":"sleepcycle","template":"carousel","width":"' +
         lastWidth +
         '","height":"140"});';
       container.appendChild(init);
