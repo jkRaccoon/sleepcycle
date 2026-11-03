@@ -95,12 +95,13 @@ export default function CoupangBanner({ className = '', position = 'bottom' }: P
       className={`${spacing} ${className}`}
       aria-label="advertisement"
     >
+      {/* 대가성 고지는 배너 앞에, 본문과 구별되게 — 공정위 추천·보증 심사지침 2024-12-01 개정 */}
+      <p className="mb-2 text-center text-xs font-medium leading-snug text-amber-700">{disclosure}</p>
       <div
         ref={ref}
         className="mx-auto flex w-full max-w-full justify-center overflow-hidden"
         style={{ maxWidth: '100%' }}
       />
-      <p className="mt-2 text-center text-[11px] leading-tight text-slate-400">{disclosure}</p>
     </aside>
   );
 }
