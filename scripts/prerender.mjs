@@ -5,7 +5,9 @@ import { preview } from 'vite';
 import puppeteer from 'puppeteer';
 
 const DIST = 'dist';
-const PORT = 4173 + Math.floor((process.pid % 1000)); // 병렬 빌드 포트 충돌 회피
+// 병렬 빌드 포트 충돌 회피. pid 로 고른 포트가 이미 쓰이면(예: macOS AirPlay 5000) vite 가 다른 포트로 피하는데
+// puppeteer 는 원래 포트를 긁어 남의 응답이 dist 에 굳는다(2026-11-03 tdee) — strictPort 로 실패시킨다.
+const PORT = Number(process.env.PRERENDER_PORT) || 4173 + Math.floor((process.pid % 1000));
 const SUBDIR = process.env.BUILD_TARGET === 'subdir';
 const BASE = SUBDIR ? '/tools/sleepcycle/' : '/';
 const BASE_ROUTES = ['/', '/guide', '/faq'];
@@ -19,7 +21,7 @@ function langRoute(lang, base) {
 const ROUTES = LANGS.flatMap((lang) => BASE_ROUTES.map((r) => langRoute(lang, r)));
 
 async function startServer() {
-  return preview({ preview: { port: PORT }, base: BASE });
+  return preview({ preview: { port: PORT, strictPort: true }, base: BASE });
 }
 
 async function prerenderRoute(browser, route) {
