@@ -10,7 +10,7 @@
  * @example
  * <AuthorByline
  *   authorName="김지광 (운영자)"
- *   reviewerName="외부 세무사 검수"
+ *   reviewerName="공개 법령·국세청 안내 기반 검토"
  *   lastUpdated="2026-05-16"
  *   organizationName="bal.pe.kr 마이크로 SaaS"
  *   organizationUrl="/about"
@@ -51,13 +51,13 @@ export interface AuthorBylineProps {
 const DICT = {
   ko: {
     authorPrefix: '작성',
-    reviewerPrefix: '감수',
+    reviewerPrefix: '검토 근거',
     updatedPrefix: '마지막 업데이트',
     by: '·',
   },
   en: {
     authorPrefix: 'Author',
-    reviewerPrefix: 'Reviewed by',
+    reviewerPrefix: 'Review basis',
     updatedPrefix: 'Last updated',
     by: '·',
   },
@@ -126,9 +126,7 @@ export default function AuthorByline({
       typeof window !== 'undefined' ? window.location.href : undefined;
 
     const author = { '@type': 'Person', name: authorName };
-    const reviewer = reviewerName
-      ? { '@type': 'Person', name: reviewerName }
-      : undefined;
+    // reviewerName 은 검토 근거(공개 자료 등)를 적는 문구라 실제 사람이 아니다 — reviewedBy(Person)로 내보내지 않는다
     const publisher = {
       '@type': 'Organization',
       name: organizationName,
@@ -139,7 +137,6 @@ export default function AuthorByline({
       '@context': 'https://schema.org',
       '@type': mainEntityType,
       author,
-      ...(reviewer ? { reviewedBy: reviewer } : {}),
       ...(datePublished ? { datePublished } : {}),
       dateModified: lastUpdated,
       publisher,
