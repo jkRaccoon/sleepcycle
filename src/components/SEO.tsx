@@ -67,7 +67,7 @@ export default function SEO({ titleKey, descriptionKey, path, jsonLd, noindex }:
     <>
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1"} />
+      <meta name="robots" content={noindex ? "noindex,nofollow" : "noindex,follow"} />
       <link rel="canonical" href={url} />
       <link rel="alternate" hrefLang="ko" href={`${SITE}${koPath}`} />
       <link rel="alternate" hrefLang="en" href={`${SITE}${enPath}`} />
