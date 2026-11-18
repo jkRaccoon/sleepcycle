@@ -23,5 +23,9 @@ echo "==> sync dist/ → s3://$BUCKET/tools/$TOOL/ (--delete: 이 prefix 한정)
 aws s3 sync "dist/" "s3://$BUCKET/tools/$TOOL/" --delete --profile "$AWS_PROFILE"
 
 echo "==> invalidate /tools/$TOOL/*"
-aws cloudfront create-invalidation --distribution-id "$DIST" --paths "/tools/$TOOL/*" --profile "$AWS_PROFILE" --output text >/dev/null
+if [[ -n "${SKIP_INVALIDATION:-}" ]]; then
+  echo "    SKIP_INVALIDATION=1 — 무효화 생략(일괄 배포는 끝에 /tools/* 한 번, 2026-11 무료 한도 초과 대응)"
+else
+  aws cloudfront create-invalidation --distribution-id "$DIST" --paths "/tools/$TOOL/*" --profile "$AWS_PROFILE" --output text >/dev/null
+fi
 echo "==== $TOOL 배포 완료: https://bal.pe.kr/tools/$TOOL/ ===="
